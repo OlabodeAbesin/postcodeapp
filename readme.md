@@ -84,16 +84,6 @@ If all the tests pass, you should see a success message.
 
 ## Additional Notes
 
-- The PostcodeApp uses Symfony's built-in development server for testing purposes. For production deployment, consider using a more robust web server (e.g., Apache or Nginx) with PHP-FPM.
-
-- For security reasons, consider using environment variables to store sensitive information like database credentials. Symfony supports the use of environment variables in the `.env` file.
-
-- If you encounter any issues during the setup or testing, refer to Symfony's official documentation (https://symfony.com/doc) or the relevant package documentation for troubleshooting and solutions.
-
-- Always sanitize and validate user input to prevent security vulnerabilities like SQL injection or XSS attacks.
-
-- Remember to secure your production environment by disabling Symfony's development mode and enabling appropriate security measures. Review Symfony's security recommendations for production deployments.
-
 - Keep the application and its dependencies up to date by periodically running `composer update` to fetch the latest package versions.
 
 ## Conclusion
