@@ -21,28 +21,30 @@ class PostcodeRepository extends ServiceEntityRepository
         parent::__construct($registry, Postcode::class);
     }
 
-//    /**
-//     * @return Postcode[] Returns an array of Postcode objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function findByPartialMatch(string $searchString)
+    {
+        // Implement the logic to find postcodes with partial matches
+        // You can use Doctrine QueryBuilder or DQL to perform the query
+        // Example:
+        return $this->createQueryBuilder('p')
+            ->where('p.postcode LIKE :searchString')
+            ->setParameter('searchString', '%' . $searchString . '%')
+            ->getQuery()
+            ->getResult();
+    }
 
-//    public function findOneBySomeField($value): ?Postcode
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function findNearbyPostcodes(float $latitude, float $longitude)
+    {
+        // Implement the logic to find postcodes near the given latitude and longitude
+        // You can use Doctrine QueryBuilder or DQL to perform the query
+        // Example:
+        return $this->createQueryBuilder('p')
+            ->select('p, (6371 * ACOS(SIN(RADIANS(:lat)) * SIN(RADIANS(p.latitude)) + COS(RADIANS(:lat)) * COS(RADIANS(p.latitude)) * COS(RADIANS(:long - p.longitude)))) AS distance')
+            ->setParameter('lat', $latitude)
+            ->setParameter('long', $longitude)
+            ->having('distance < 10') // Define your desired distance threshold in kilometers
+            ->orderBy('distance', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }
