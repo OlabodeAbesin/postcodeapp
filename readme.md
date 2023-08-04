@@ -59,19 +59,21 @@ php bin/console app:import-postcodes
 symfony serve
 ```
 
-2. Test the API endpoints (This can be done via postman or in a browser):
+2. Test the API endpoints (This can be also done via postman or in a browser):
 
 Partial string match:
-
+GET 
 ```bash
 curl http://127.0.0.1:8000/api/postcodes/partial/LN
 ```
+<img width="922" alt="Screenshot 2023-08-04 at 20 05 23" src="https://github.com/OlabodeAbesin/postcodeapp/assets/22768889/45884c04-f5a6-4771-b997-6f13bad401a2">
 
 Postcodes near a location (latitude, longitude):
 
 ```bash
 curl http://127.0.0.1:8000/api/postcodes/nearby/51.5074/-0.1278
 ```
+<img width="908" alt="Screenshot 2023-08-04 at 20 04 50" src="https://github.com/OlabodeAbesin/postcodeapp/assets/22768889/a2c6678d-641b-47d7-9a18-93d881506f85">
 
 Replace `127.0.0.1:8000` with the appropriate domain or IP if you are hosting the application on a different server.
 
@@ -81,7 +83,6 @@ Replace `127.0.0.1:8000` with the appropriate domain or IP if you are hosting th
 - This PostcodeApp uses Symfony's built-in development server for testing purposes. For production deployment, I'll be using a more robust web server (e.g., Apache or Nginx) with PHP-FPM.
 - The url parameters in the second endpoint (Longitude and Latitude) are only validated as a data type and currently not throwing nice errors. I'd sanitize and validate user input for better UX and to prevent security vulnerabilities.
 - If the test question didn't say using a controller action. I'd also consider moving my business logic out of the controller into a service class. 
-- Keep the application and its dependencies up to date by periodically running `composer update` to fetch the latest package versions.
 
 ## Conclusion
 
