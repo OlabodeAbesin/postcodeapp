@@ -48,14 +48,16 @@ class ImportPostcodesCommand extends Command
         $rows = explode("\n", $postcodesData);
         foreach ($rows as $row) {
             $data = str_getcsv($row);
-            // Assuming the CSV structure: [postcode, latitude, longitude]
-            $postcode = new Postcode();
-            $postcode->setPostcode($data[0]);
-            $postcode->setLatitude(floatval($data[1]));
-            $postcode->setLongitude(floatval($data[2]));
+            if ($data[0] != 'id' && isset($data[1])) {
+                // Assuming the CSV structure: [postcode, latitude, longitude]
+                $postcode = new Postcode();
+                $postcode->setPostcode($data[1]);
+                $postcode->setLatitude(floatval($data[2]));
+                $postcode->setLongitude(floatval($data[3]));
 
-            // Persist the postcode entity
-            $this->entityManager->persist($postcode);
+                // Persist the postcode entity
+                $this->entityManager->persist($postcode);
+            }
         }
 
         // Flush all changes to the database

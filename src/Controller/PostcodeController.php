@@ -55,13 +55,13 @@ class PostcodeController extends AbstractController
             ->setParameter('long', $longitude);
 
         $postcodes = $query->getResult();
-
         $response = [];
         foreach ($postcodes as $postcode) {
             $response[] = [
-                'postcode' => $postcode->getPostcode(),
-                'latitude' => $postcode->getLatitude(),
-                'longitude' => $postcode->getLongitude(),
+                'postcode' => $postcode[0]->getPostcode(),
+                'latitude' => $postcode[0]->getLatitude(),
+                'longitude' => $postcode[0]->getLongitude(),
+                'distance' => $postcode['distance'],
             ];
         }
 

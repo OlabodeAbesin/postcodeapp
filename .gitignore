@@ -21,3 +21,4 @@
 ###< symfony/phpunit-bridge ###
 /.data
 .DS_Store
+/mysql

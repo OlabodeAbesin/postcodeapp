@@ -64,7 +64,7 @@ symfony serve
 Partial string match:
 
 ```bash
-curl http://127.0.0.1:8000/api/postcodes/partial/LONDON
+curl http://127.0.0.1:8000/api/postcodes/partial/LN
 ```
 
 Postcodes near a location (latitude, longitude):
