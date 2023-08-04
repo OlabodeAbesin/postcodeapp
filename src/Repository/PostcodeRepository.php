@@ -21,6 +21,11 @@ class PostcodeRepository extends ServiceEntityRepository
         parent::__construct($registry, Postcode::class);
     }
 
+    /**
+     * Implement the logic to find postcodes with partial matches
+     *
+     * @param string $searchString searchString
+     */
     public function findByPartialMatch(string $searchString)
     {
         // Implement the logic to find postcodes with partial matches
@@ -33,16 +38,19 @@ class PostcodeRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * Implement the logic to find postcodes near the given latitude and longitude
+     *
+     * @param float $latitude  latitide
+     * @param float $longitude longitude
+     */
     public function findNearbyPostcodes(float $latitude, float $longitude)
     {
-        // Implement the logic to find postcodes near the given latitude and longitude
-        // You can use Doctrine QueryBuilder or DQL to perform the query
-        // Example:
         return $this->createQueryBuilder('p')
             ->select('p, (6371 * ACOS(SIN(RADIANS(:lat)) * SIN(RADIANS(p.latitude)) + COS(RADIANS(:lat)) * COS(RADIANS(p.latitude)) * COS(RADIANS(:long - p.longitude)))) AS distance')
             ->setParameter('lat', $latitude)
             ->setParameter('long', $longitude)
-            ->having('distance < 10') // Define your desired distance threshold in kilometers
+            ->having('distance < 10') //distance threshold in kilometers
             ->orderBy('distance', 'ASC')
             ->getQuery()
             ->getResult();
