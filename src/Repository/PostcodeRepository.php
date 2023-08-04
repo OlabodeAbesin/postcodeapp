@@ -24,7 +24,7 @@ class PostcodeRepository extends ServiceEntityRepository
     /**
      * Implement the logic to find postcodes with partial matches
      *
-     * @param string $searchString searchString
+     * @param  string  $searchString searchString
      */
     public function findByPartialMatch(string $searchString)
     {
@@ -33,7 +33,7 @@ class PostcodeRepository extends ServiceEntityRepository
         // Example:
         return $this->createQueryBuilder('p')
             ->where('p.postcode LIKE :searchString')
-            ->setParameter('searchString', '%' . $searchString . '%')
+            ->setParameter('searchString', '%'.$searchString.'%')
             ->getQuery()
             ->getResult();
     }
@@ -41,8 +41,8 @@ class PostcodeRepository extends ServiceEntityRepository
     /**
      * Implement the logic to find postcodes near the given latitude and longitude
      *
-     * @param float $latitude  latitide
-     * @param float $longitude longitude
+     * @param  float  $latitude  latitide
+     * @param  float  $longitude longitude
      */
     public function findNearbyPostcodes(float $latitude, float $longitude)
     {

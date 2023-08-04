@@ -2,25 +2,38 @@
 
 namespace App\Entity;
 
-use App\Repository\PostcodeRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: PostcodeRepository::class)]
+/**
+ * @ORM\Entity
+ */
 class Postcode
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    /**
+     * @ORM\Id
+     *
+     * @ORM\GeneratedValue
+     *
+     * @ORM\Column(type="integer")
+     */
+    private $id;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $postcode = null;
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $postcode;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $latitude = null;
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $latitude;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $longitude = null;
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $longitude;
+
+    // Constructor, getters, and setters
 
     public function getId(): ?int
     {
@@ -32,31 +45,31 @@ class Postcode
         return $this->postcode;
     }
 
-    public function setPostcode(?string $postcode): static
+    public function setPostcode(string $postcode): self
     {
         $this->postcode = $postcode;
 
         return $this;
     }
 
-    public function getLatitude(): ?string
+    public function getLatitude(): ?float
     {
         return $this->latitude;
     }
 
-    public function setLatitude(?string $latitude): static
+    public function setLatitude(float $latitude): self
     {
         $this->latitude = $latitude;
 
         return $this;
     }
 
-    public function getLongitude(): ?string
+    public function getLongitude(): ?float
     {
         return $this->longitude;
     }
 
-    public function setLongitude(?string $longitude): static
+    public function setLongitude(float $longitude): self
     {
         $this->longitude = $longitude;
 

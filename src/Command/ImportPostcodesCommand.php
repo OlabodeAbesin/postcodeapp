@@ -2,17 +2,17 @@
 
 namespace App\Command;
 
+use App\Entity\Postcode;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\HttpClient\HttpClient;
-use Doctrine\ORM\EntityManagerInterface;
-use App\Entity\Postcode;
 
 class ImportPostcodesCommand extends Command
 {
     //This url will be set and pulled from the env
-    private const POSTCODES_URL = 'http://parlvid.mysociety.org/os/postcodes.csv';
+    private const POSTCODES_URL = 'https://data.freemaptools.com/download/uk-outcode-postcodes/postcode-outcodes.csv';
 
     private $entityManager;
 
@@ -38,6 +38,7 @@ class ImportPostcodesCommand extends Command
 
         if ($response->getStatusCode() !== 200) {
             $output->writeln('Failed to download postcodes data.');
+
             return Command::FAILURE;
         }
 
@@ -47,7 +48,6 @@ class ImportPostcodesCommand extends Command
         $rows = explode("\n", $postcodesData);
         foreach ($rows as $row) {
             $data = str_getcsv($row);
-
             // Assuming the CSV structure: [postcode, latitude, longitude]
             $postcode = new Postcode();
             $postcode->setPostcode($data[0]);
@@ -62,6 +62,7 @@ class ImportPostcodesCommand extends Command
         $this->entityManager->flush();
 
         $output->writeln('Postcodes imported successfully.');
+
         return Command::SUCCESS;
     }
 }

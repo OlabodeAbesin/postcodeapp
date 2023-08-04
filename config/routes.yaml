@@ -1,3 +1,13 @@
 controllers:
     resource: ../src/Controller/
     type: attribute
+
+api_postcodes_partial_match:
+    path: /api/postcodes/partial/{searchString}
+    controller: App\Controller\PostcodeController::partialMatchAction
+    methods: [GET]
+
+api_postcodes_nearby:
+    path: /api/postcodes/nearby/{latitude}/{longitude}
+    controller: App\Controller\PostcodeController::nearbyAction
+    methods: [GET]

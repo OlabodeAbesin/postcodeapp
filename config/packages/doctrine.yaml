@@ -12,9 +12,18 @@ doctrine:
         mappings:
             App:
                 is_bundle: false
+                type: annotation
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'App\Entity'
                 alias: App
+        dql:
+            string_functions:
+                SIN: DoctrineExtensions\Query\Mysql\Sin
+                COS: DoctrineExtensions\Query\Mysql\Cos
+                ASIN: DoctrineExtensions\Query\Mysql\Asin
+                power: DoctrineExtensions\Query\Mysql\Power
+                radians: DoctrineExtensions\Query\Mysql\Radians
+                
 
 when@test:
     doctrine:
