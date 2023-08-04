@@ -75,6 +75,13 @@ curl http://127.0.0.1:8000/api/postcodes/nearby/51.5074/-0.1278
 
 Replace `127.0.0.1:8000` with the appropriate domain or IP if you are hosting the application on a different server.
 
+## Unit Tests
+
+```bash
+php vendor/bin/phpunit
+```
+If all the tests pass, you should see a success message. 
+
 ## Additional Notes
 
 - The PostcodeApp uses Symfony's built-in development server for testing purposes. For production deployment, consider using a more robust web server (e.g., Apache or Nginx) with PHP-FPM.
