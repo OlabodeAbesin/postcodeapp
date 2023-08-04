@@ -59,7 +59,7 @@ php bin/console app:import-postcodes
 symfony serve
 ```
 
-2. Test the API endpoints:
+2. Test the API endpoints (This can be done via postman or in a browser):
 
 Partial string match:
 
@@ -75,15 +75,12 @@ curl http://127.0.0.1:8000/api/postcodes/nearby/51.5074/-0.1278
 
 Replace `127.0.0.1:8000` with the appropriate domain or IP if you are hosting the application on a different server.
 
-## Unit Tests
-
-```bash
-php vendor/bin/phpunit
-```
-If all the tests pass, you should see a success message. 
-
-## Additional Notes
-
+## Things I'll add if I spent more time working on this
+- Authenticating the api endpoints using a JWT Bearer token
+- I'd spend more time on automated testing (configuring up the test environment). I wrote tests though :)
+- This PostcodeApp uses Symfony's built-in development server for testing purposes. For production deployment, I'll be using a more robust web server (e.g., Apache or Nginx) with PHP-FPM.
+- The url parameters in the second endpoint (Longitude and Latitude) are only validated as a data type and currently not throwing nice errors. I'd sanitize and validate user input for better UX and to prevent security vulnerabilities.
+- If the test question didn't say using a controller action. I'd also consider moving my business logic out of the controller into a service class. 
 - Keep the application and its dependencies up to date by periodically running `composer update` to fetch the latest package versions.
 
 ## Conclusion

@@ -43,42 +43,52 @@ class PostcodeController extends AbstractController
     #[Route('/api/postcodes/nearby/{latitude}/{longitude}', name: 'api_postcodes_nearby', methods: ['GET'])]
     public function nearbyAction(float $latitude, float $longitude): JsonResponse
     {
-        $repository = $this->entityManager->getRepository(Postcode::class);
-        $dql = 'SELECT p, '.
-            '('.$this->getDistanceFormula($latitude, $longitude).') AS distance '.
-            'FROM '.Postcode::class.' p '.
-            'HAVING distance < 10 '.
-            'ORDER BY distance ASC';
+        try {
+            $repository = $this->entityManager->getRepository(Postcode::class);
+            $dql = 'SELECT p, '.
+                '('.$this->getDistanceFormula($latitude, $longitude).') AS distance '.
+                'FROM '.Postcode::class.' p '.
+                'HAVING distance < 10 '.
+                'ORDER BY distance ASC';
 
-        $query = $this->entityManager->createQuery($dql)
-            ->setParameter('lat', $latitude)
-            ->setParameter('long', $longitude);
+            $query = $this->entityManager->createQuery($dql)
+                ->setParameter('lat', $latitude)
+                ->setParameter('long', $longitude);
 
-        $postcodes = $query->getResult();
-        $response = [];
-        foreach ($postcodes as $postcode) {
-            $response[] = [
-                'postcode' => $postcode[0]->getPostcode(),
-                'latitude' => $postcode[0]->getLatitude(),
-                'longitude' => $postcode[0]->getLongitude(),
-                'distance' => $postcode['distance'],
-            ];
+            $postcodes = $query->getResult();
+            $response = [];
+            foreach ($postcodes as $postcode) {
+                $response[] = [
+                    'postcode' => $postcode[0]->getPostcode(),
+                    'latitude' => $postcode[0]->getLatitude(),
+                    'longitude' => $postcode[0]->getLongitude(),
+                    'distance' => $postcode['distance'],
+                ];
+            }
+
+            return new JsonResponse($response);
+        } catch (\Throwable $th) {
+            return new JsonResponse([], 500);
         }
 
-        return new JsonResponse($response);
     }
 
     private function getDistanceFormula(float $latitude, float $longitude): string
     {
-        $latitudeExpression = 'RADIANS(:lat)';
-        $longitudeExpression = 'RADIANS(:long)';
+        try {
+            $latitudeExpression = 'RADIANS(:lat)';
+            $longitudeExpression = 'RADIANS(:long)';
 
-        $distanceExpression = '6371 * 2 * SIN(SQRT('.
-            'POWER(SIN(('.$latitudeExpression.' - RADIANS(p.latitude)) / 2), 2) + '.
-            'COS('.$latitudeExpression.') * COS(RADIANS(p.latitude)) * '.
-            'POWER(SIN(('.$longitudeExpression.' - RADIANS(p.longitude)) / 2), 2)'.
-            '))';
+            $distanceExpression = '6371 * 2 * SIN(SQRT('.
+                'POWER(SIN(('.$latitudeExpression.' - RADIANS(p.latitude)) / 2), 2) + '.
+                'COS('.$latitudeExpression.') * COS(RADIANS(p.latitude)) * '.
+                'POWER(SIN(('.$longitudeExpression.' - RADIANS(p.longitude)) / 2), 2)'.
+                '))';
 
-        return $distanceExpression;
+            return $distanceExpression;
+        } catch (\Throwable $th) {
+            return new JsonResponse([], 500);
+        }
+
     }
 }

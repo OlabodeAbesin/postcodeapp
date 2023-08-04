@@ -18,8 +18,8 @@ class PostcodeControllerTest extends WebTestCase
         $this->assertCount(2, $responseData);
 
         // Assuming this app imported two postcodes with "LONDON" in their names
-        $this->assertSame('LONDON1', $responseData[0]['postcode']);
-        $this->assertSame('LONDON2', $responseData[1]['postcode']);
+        $this->assertSame('LN1', $responseData[0]['postcode']);
+        $this->assertSame('LN2', $responseData[1]['postcode']);
     }
 
     public function testNearbyAction()
