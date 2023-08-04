@@ -61,14 +61,15 @@ symfony serve
 
 2. Test the API endpoints (This can be also done via postman or in a browser):
 
-Partial string match:
+a. Partial string match:
 GET 
 ```bash
 curl http://127.0.0.1:8000/api/postcodes/partial/LN
 ```
 <img width="922" alt="Screenshot 2023-08-04 at 20 05 23" src="https://github.com/OlabodeAbesin/postcodeapp/assets/22768889/45884c04-f5a6-4771-b997-6f13bad401a2">
 
-Postcodes near a location (latitude, longitude):
+<br>
+b. Postcodes near a location (latitude, longitude):
 
 ```bash
 curl http://127.0.0.1:8000/api/postcodes/nearby/51.5074/-0.1278
