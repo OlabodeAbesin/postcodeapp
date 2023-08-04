@@ -29,7 +29,7 @@ class ImportPostcodesCommand extends Command
             ->setDescription('Download and import UK postcodes into the database.');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('Downloading postcodes data...');
 
